@@ -58,14 +58,19 @@ const App: () => React$Node = () => {
     uri : 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
   }
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Hello World!</Text>  
-      <Text style={styles.title}>Hi</Text>
-      <Image source={pic} style={{width:300, height:100}} />
-      <MyName name="Choi"/>
-      <MyName name="Kim"/>
-      <Blink text="테스트입니다"/>
-    </View>
+    
+      <View style={{
+        flex:1, 
+        justifyContent: 'center',
+        alignItems:'center',
+        flexDirection:'row'}}>
+        
+        <View style={{width:50, height:50, backgroundColor:'powderblue'}}/>
+        <View style={{width:50, height:50, backgroundColor:'skyblue'}}/>
+        <View style={{width:50, height:50, backgroundColor:'steelblue'}}/>
+      </View>
+   
+    
   );
 };
 
@@ -74,11 +79,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent:'center',
     alignItems:'center',
+    //backgroundColor: 'powderblue',
   },
   title: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+  },
+  bigBlue: {
+    color: 'blue',
+    fontWeight:'bold',
+    fontSize:20,
+  },
+  red:{
+    color:'red',
   },
 });
 
