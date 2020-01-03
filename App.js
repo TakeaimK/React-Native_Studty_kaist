@@ -32,6 +32,26 @@ class MyName extends Component {
   }
 }
 
+class Blink extends Component{
+  constructor(props){
+      super(props);
+      this.state = {isShowingText: true}
+
+      setInterval(()=>(this.setState(
+        prevState => (
+          {isShowingText: !prevState.isShowingText})
+          )), 1000);
+  }
+  render(){
+    if(!this.state.isShowingText){
+      return null;
+    }
+    return(
+      <Text>{this.props.text}</Text>
+    );
+  }
+}
+
 
 const App: () => React$Node = () => {
   let pic = {
@@ -44,6 +64,7 @@ const App: () => React$Node = () => {
       <Image source={pic} style={{width:300, height:100}} />
       <MyName name="Choi"/>
       <MyName name="Kim"/>
+      <Blink text="테스트입니다"/>
     </View>
   );
 };
