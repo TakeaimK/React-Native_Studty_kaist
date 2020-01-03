@@ -12,6 +12,7 @@ import {
   View,
   Text,
   Image,
+  TextInput,
 } from 'react-native';
 
 import {
@@ -52,27 +53,40 @@ class Blink extends Component{
   }
 }
 
+const str1="I am Sejin Choi"
 
-const App: () => React$Node = () => {
-  let pic = {
-    uri : 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
+const str2="✨✨✨"
+
+type Props = {};
+export default class App extends Component<Props>{
+  constructor(props){
+     super(props);
+     this.state={text:""}
   }
-  return (
-    
-      <View style={{
-        flex:1, 
-        justifyContent: 'center',
-        alignItems:'center',
-        flexDirection:'row'}}>
+  render(){
+    let pic = {
+      uri : 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
+    }
+    return (
+      
+        <View style={{
+          flex:1, 
+          justifyContent: 'center',
+          alignItems:'center',
+          flexDirection:'column',
+          padding: 10}}>
+          <TextInput style={{height:40}} 
+          placeholder="Type Here!" 
+          onChangeText={(text)=>this.setState({text})} />
+          <Text style={{padding: 10, fondSize:42}}>
+            {this.state.text.split(' ').map((word)=> word&&'✨').join('')}
+          </Text>
+        </View>
+     
         
-        <View style={{width:50, height:50, backgroundColor:'powderblue'}}/>
-        <View style={{width:50, height:50, backgroundColor:'skyblue'}}/>
-        <View style={{width:50, height:50, backgroundColor:'steelblue'}}/>
-      </View>
-   
-    
-  );
-};
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -96,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+
