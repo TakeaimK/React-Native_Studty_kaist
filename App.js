@@ -18,6 +18,9 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  ScrollView,
+  FlatList,
+  SectionList,
 } from 'react-native';
 
 import {
@@ -80,49 +83,102 @@ export default class App extends Component<Props>{
       uri : 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
     }
     return (
+      
         <View style={{
           flex:1, 
           justifyContent: 'center',
           alignItems:'center',
           flexDirection:'column',
-          padding: 10}}>
-          <TextInput style={{height:40}} 
-          placeholder="Type Here!" 
-          onChangeText={(text)=>this.setState({text})} />
-          <Text style={{padding: 10, fondSize:42}}>
-            {this.state.text.split(' ').map((word)=> word&&'✨').join('')}
-          </Text>
-          <View style={styles.button}>
-            <Button style={{margin:20, fontSize:30}}
-              onPress={()=>{
-              Alert.alert('you tapped the button!');
-            }}
-            title="일반 버튼"
-            color="black"
+          padding: 10,}}>
+          
+          <View style={styles.flatList}>
+            <FlatList
+              data={[
+                {key: 'A'},
+                {key: 'B'},
+                {key: 'C'},
+                {key: 'D'},
+                {key: 'E'},
+                {key: 'F'},
+                {key: 'G'},
+                {key: 'H'},
+                {key: 'I'},
+              ]}
+              renderItem={({item})=> 
+
+                <Button 
+                onPress={()=>{
+                  
+                  Alert.alert('you tapped the button!');
+                }}
+                  title={item.key}
+                  
+                  />}
             />
           </View>
-          <TouchableHighlight
-            onPress={this._onPressButton}
-            underlayColor="white"
-            >
-              <View style={styles.touch}>
-                <Text style={styles.white}>터치 가능한 영역</Text>
-              </View>
-          </TouchableHighlight>
-          <TouchableOpacity
-             onPress={this._onPressButton}
-             >
-             <View style={styles.touch}>
-                <Text style={styles.white}>터치 반응이 있는 영역</Text>
-              </View>
-          </TouchableOpacity>
-          <TouchableWithoutFeedback
-             onPress={this._onPressButton}
-             >
+
+          <View style={styles.sectionList}>
+            <SectionList
+              sections={[
+                {title: 'D', data: ['Devin']},
+                {title: 'J', data: ['Jack', 'Jow', 'John']},
+              ]}
+              renderSectionHeader={({section})=> <Text style={styles.bigBlue}>{section.title}</Text>}
+              renderItem={({item})=> <Text>{item}</Text>}
+            />
+          </View>
+
+
+          <ScrollView>
+            <View style={styles.button}>
+              <Button
+                onPress={()=>{
+                Alert.alert('you tapped the button!');
+              }}
+              title="일반 버튼"
+              color="black"
+              />
+            </View>
+            <TouchableHighlight
+              onPress={this._onPressButton}
+              underlayColor="white"
+              >
+                <View style={styles.touch}>
+                  <Text style={styles.white}>터치 가능한 영역</Text>
+                </View>
+            </TouchableHighlight>
+            <TouchableOpacity
+               onPress={this._onPressButton}
+               >
                <View style={styles.touch}>
+                  <Text style={styles.white}>터치 반응이 있는 영역</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableWithoutFeedback
+               onPress={this._onPressButton}
+              >
+              <View style={styles.touch}>
                 <Text style={styles.white}>피드백 없는 터치 가능 영역</Text>
               </View>
-             </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+
+            <TextInput style={{height:40}} 
+            placeholder="Type Here!" 
+            onChangeText={(text)=>this.setState({text})} />
+            <Text style={{padding: 10, fontSize:42}}>
+              {this.state.text.split(' ').map((word)=> word&&'✨').join('')}
+            </Text>
+            <Text style={{padding: 10, fontSize:42}}>
+             🎹
+            </Text>
+            <Text style={{padding: 10, fontSize:42}}>
+             🎹
+            </Text>
+            <Text style={{padding: 10, fontSize:42}}>
+             🎹
+            </Text>
+          </ScrollView>
+
         </View>
      
         
@@ -146,13 +202,18 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontWeight:'bold',
     fontSize:20,
+    padding:10,
+    backgroundColor:'gray',
   },
   white:{
     color:'white',
   },
   button:{
-    margin:20,
+    marginBottom:20,
+    marginTop:20,
     fontSize:40,
+    width:200,
+    justifyContent:'center',
   },
   touch:{
     marginBottom:30,
@@ -162,6 +223,16 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     backgroundColor:'blue',
     color:'white',
+  },
+  flatList:{
+    margin:10,
+    width:100,
+    height:250,
+  },
+  sectionList:{
+    width:300,
+    height:150,
+    fontSize:30,
   },
   
 });
