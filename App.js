@@ -6,6 +6,8 @@
  * @flow
  */
 
+//fetch('')
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -30,6 +32,27 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+function getMoviesFromApiAsync(){
+  return fetch('https://facebook.github.io/react-native/movies.json')
+  .then((response) => response.json())
+  .then((responseJson) => {
+    return responseJson.movies;
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+}
+
+async function getMoviesFromApi(){
+  try{
+    let response = await fetch('https://facebook.github.io/react-native/movies.json');
+    let responseJson = await response.json();
+    return responseJson.movies;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 class MyName extends Component {
   render() {
@@ -69,7 +92,19 @@ type Props = {};
 export default class App extends Component<Props>{
   constructor(props){
      super(props);
-     this.state={text:""}
+     this.state={text:"", isLoading: true}
+  }
+
+  componentDidMount(){
+    return fetch('https://facebook.github.io/react-native/movies.json')
+  .then((response) => response.json())
+  .then((responseJson) => {
+    this.setState({
+      isLoading:false,
+      dataSource: responseJson.movies,
+    })
+  })
+  .catch(error => console.log(error))
   }
 
   _onPressButton(){
@@ -82,8 +117,31 @@ export default class App extends Component<Props>{
     let pic = {
       uri : 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
     }
-    return (
-      
+    if(this.state.isLoading) {
+        return(
+          <View>
+            <Text>Loading...</Text>
+          </View>
+        )
+      }
+    return(
+      <View style={{flex:1, paddingTop: 40}}>
+        <FlatList
+        data={this.state.dataSource}
+        renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
+        keyExtractor={({id}, index) => id}
+        />
+      </View>
+    )
+     
+        
+  };
+}
+
+
+/*
+return(
+  
         <View style={{
           flex:1, 
           justifyContent: 'center',
@@ -180,11 +238,9 @@ export default class App extends Component<Props>{
           </ScrollView>
 
         </View>
-     
-        
-    );
-  }
-}
+)
+
+*/
 
 const styles = StyleSheet.create({
   container: {
@@ -213,7 +269,7 @@ const styles = StyleSheet.create({
     marginTop:20,
     fontSize:40,
     width:200,
-    justifyContent:'center',
+    
   },
   touch:{
     marginBottom:30,
